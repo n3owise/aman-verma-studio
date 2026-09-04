@@ -48,6 +48,7 @@ export const workSample = defineType({
       options: {
         list: [
           { title: 'Image / Still', value: 'image' },
+          { title: 'PDF Carousel / Document', value: 'pdf' },
           { title: 'Video / Motion Loop', value: 'video' },
         ],
         layout: 'radio',
@@ -56,8 +57,19 @@ export const workSample = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'pdfFile',
+      title: 'PDF Carousel File',
+      type: 'file',
+      options: {
+        accept: 'application/pdf',
+      },
+      hidden: ({ parent }) => parent?.mediaType !== 'pdf',
+      description:
+        'Upload your multi-page PDF presentation or carousel deck. Each page will be rendered automatically as a slide in the popup carousel.',
+    }),
+    defineField({
       name: 'image',
-      title: 'Work Sample Image (Primary/Cover)',
+      title: 'Work Sample Image (Primary / Cover)',
       type: 'image',
       options: {
         hotspot: true,
@@ -70,12 +82,14 @@ export const workSample = defineType({
           description: 'Important for accessibility and SEO.',
         }),
       ],
-      description: 'Upload your high-res design, mockup, logo, or poster.',
+      description:
+        'Primary cover image for the grid. (For PDF: you can upload a custom cover image or leave empty to use Page 1).',
     }),
     defineField({
       name: 'gallery',
       title: 'Gallery / Carousel Images (Optional)',
       type: 'array',
+      hidden: ({ parent }) => parent?.mediaType !== 'image',
       of: [
         defineArrayMember({
           type: 'image',

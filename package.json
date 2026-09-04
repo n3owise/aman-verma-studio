@@ -8,8 +8,9 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
-    "dev": "sanity dev",
-    "start": "sanity start"
+    "dev": "sanity dev --port 4001",
+    "start": "sanity start --port 4001",
+    "typegen": "sanity schemas extract --force && sanity typegen generate"
   },
   "keywords": [
     "sanity"
